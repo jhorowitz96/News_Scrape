@@ -7,3 +7,8 @@
     /* height: 100vh; */
     width: 100%;
   }
+
+  .btn {
+    background-color:teal;
+    color:black
+  }

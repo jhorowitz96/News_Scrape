@@ -11,16 +11,32 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <button class="nav-link" href="#">Saved Articles</button>
+        <button class="nav-link" href="#" id="saved">Saved Articles</button>
       </li>
       <li class="nav-item">
-        <button class="nav-link" href="#">Scrape New</button>
+        <button class="nav-link" href="#" id="scrape">Scrape New</button>
       </li>
     </ul>
     <span class="navbar-text">
     </span>
   </div>
+  <div id="articles"></div>
 </nav>
 
+{{#if article}}
+​
+ <ul>
+  {{#each article}}
+  <p>{{this.title}}</p>
+  <a href={{this.link}}>
+   <p>Link to original article</p>
+  </a>
+  <button type="button" class="btn saveButton" data-id={{this._id}}>Save this article</button></button>
+  <br>
+  {{/each}}
+​
+  {{else}}
+  <h3>There are no new articles. Please scrape away!</h3>
+  {{/if}}
 
 <script src="/public/js/app.js"></script>
