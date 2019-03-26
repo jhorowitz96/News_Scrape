@@ -1,5 +1,6 @@
 // Dependencies
-var Article = require("./models/Article")
+var Article = require("./models/Article");
+var SavedArticle = require("./models/SavedArticle");
 var express = require("express");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
@@ -42,10 +43,10 @@ console.log(JSON.stringify(err))
 // Routes
 
 app.get("/", function(req, res){
-
+  console.log("Hello")
   Article.find({})
   .then(function (Article){
-    console.log(Article);
+    // console.log(Article);
 
     var articleObject = {
       article: Article
@@ -61,36 +62,47 @@ app.get("/", function(req, res){
 
 
 app.get("/scrape", function (req, res) {
+  console.log("Hi")
   // First, we grab the body of the html with axios
-  axios.get("http://www.deadspin.com/").then(function (response) {
+  axios.get("http://www.libertyballers.com/").then(function (response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
+    $('a').each((i,e)=>{
+      // console.log(e.attribs)
+    })
     // Now, we grab every headline title within an article tag, and do the following:
-    $(".post-list--pe").each(function (i, element) {
-      // .post-list--pe
+    // $(".post-list--pe").each(function (i, element) {
+    // //   // .post-list--pe
+
+    //   var result = {};
+    //   var title = $(element).children(".post-wrapper").children("article").children("header").children("h1.headline").children("a").text()
+
+    //   var link = $(element).children(".post-wrapper").children("article").children("header").children("h1.headline").children("a").attr("href")
+
+    //   var summary = $(element).children(".post-wrapper").children("article").children(".item__content").children(".excerpt").children("p").text()
+
+  //  console.log($(".c-entry-box--compact__title").children('a').text())
+  //  console.log('----------------')
+    $(".c-compact-river").each(function (i, element) {
 
       var result = {};
-      var title = $(element).children(".post-wrapper").children("article").children("header").children("h1.headline").children("a").text()
+      
+      var title = $(element).children(".c-compact-river__entry").children(".c-entry-box--compact").children(".c-entry-box--compact__body").children("h2.c-entry-box--compact__title").children("a").text()
+      console.log(title);
+      var link = $(element).children(".c-compact-river__entry").children(".c-entry-box--compact").children("a").attr("href")
 
-      var link = $(element).children(".post-wrapper").children("article").children("header").children("h1.headline").children("a").attr("href")
-
-      var summary = $(element).children(".post-wrapper").children("article").children(".item__content").children(".excerpt").children("p").text()
-
-      // console.log(result)
-      // console.log(title)
-      // console.log(link)
-      // console.log(summary)
+      var summary = $(element).children(".c-compact-river__entry").children(".c-entry-box--compact").children(".c-entry-box--compact__body").children("p.p-dek").text()
 
       result.title = title
       result.link = link
       result.summary = summary
   
     
-      console.log(result)
-      console.log(title)
-      console.log(link)
-      console.log(summary)
+      // console.log(result)
+      // console.log(title)
+      // console.log(link)
+      // console.log(summary)
       let newArticle = new Article(result)
 
 
@@ -139,6 +151,30 @@ app.get("/articles/:id", function(req, res) {
       res.json(err);
     });
 });
+
+app.post("/save", function(req, res){
+console.log(req.body.thisId)
+Article.findById(req.body.thisId)
+.then(function(result){
+  console.log(result)
+  var title = result.title
+  var link = result.link
+  var summary = result.summary
+var savedArticle = {title, link, summary}
+SavedArticle.create(savedArticle).then(function(result){
+  res.json(result)
+})
+})
+})
+
+app.get("/savedArticles", function(req, res){
+  SavedArticle.find({}).then(function(result){
+    res.json(result)
+  })
+})
+
+
+
 
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
