@@ -49,9 +49,9 @@
 </div>
 <div>
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+{{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Articles You Saved
-</button>
+</button> --}}
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,7 +91,7 @@
        </form>
      </div>
      <div class="modal-footer">
-       <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+       <button type="button" class="btn btn-primary" id="saveChanges" data-id={{this._id}}>Save Changes</button>
        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
      </div>
    </div>

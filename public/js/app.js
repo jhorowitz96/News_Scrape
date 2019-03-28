@@ -75,14 +75,16 @@ $(document).on("click", "#savebutton", function() {
  console.log("Comment Clicked");
     })
 
-    $(document).on("click", "#saveButton", function () {
+    $(document).on("click", "#saveChanges", function () {
       var thisId = $(this).attr("data-id");
+      console.log(thisId)
+      var message = $("#comment").val()
       $.ajax({
         method: "POST",
-        url: "/articles/:id",
+        url: "/articles/" + thisId,
         data: {
           // Value taken from title input
-          thisId:thisId
+          body:message
         }
       })
         .then(function(data) {
