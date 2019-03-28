@@ -1,6 +1,7 @@
 // Dependencies
 var Article = require("./models/Article");
 var SavedArticle = require("./models/SavedArticle");
+var Note = require("./models/Note");
 var express = require("express");
 var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
@@ -144,7 +145,7 @@ app.get("/articles/:id", function(req, res) {
     .populate("note")
     .then(function(Article) {
       // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(drticle);
+      res.json(Article);
     })
     .catch(function(err) {
       // If an error occurred, send it to the client

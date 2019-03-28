@@ -1,5 +1,5 @@
 $("#scrape").on("click", function() {
-  console.log("Hola")
+  console.log("Hellooo")
     $.ajax({
       method: "GET",
       url: "/scrape",
@@ -56,3 +56,42 @@ $(document).on("click", "#savebutton", function() {
       `
     })
   })
+
+  $(document).on("click", "#notebutton", function () {
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+      method: "GET",
+      url: "/articles/:id",
+      data: {
+        // Value taken from title input
+        thisId:thisId
+      }
+    })
+      .then(function(data) {
+        // Log the response
+        console.log(data);
+      })
+      $("#commentModal").show();
+ console.log("Comment Clicked");
+    })
+
+    $(document).on("click", "#saveButton", function () {
+      var thisId = $(this).attr("data-id");
+      $.ajax({
+        method: "POST",
+        url: "/articles/:id",
+        data: {
+          // Value taken from title input
+          thisId:thisId
+        }
+      })
+        .then(function(data) {
+          // Log the response
+          console.log(data);
+        })
+      })
+    
+//     $(document).on("click", "#notebutton", function () {
+//       $("#commentModal").show();
+//    console.log("Comment Clicked");
+// });

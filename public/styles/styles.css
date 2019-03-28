@@ -17,3 +17,17 @@
     background-color: blue;
     color:white
   }
+
+  #title{
+    background-color:lightgray
+  }
+
+  #summary{
+    background-color: royalblue;
+    color: white
+  }
+
+  #notebutton{
+    background-color:lightblue;
+    color:white
+  }
