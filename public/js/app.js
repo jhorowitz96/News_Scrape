@@ -75,25 +75,25 @@ $(document).on("click", "#savebutton", function() {
  console.log("Comment Clicked");
     })
 
+
+
+
+
     $(document).on("click", "#saveChanges", function () {
       var thisId = $(this).attr("data-id");
       console.log(thisId)
-      var message = $("#comment").val()
+      // var message = $("#comment").val()
       $.ajax({
         method: "POST",
-        url: "/articles/" + thisId,
+        url: "/articles/:id" + thisId,
         data: {
           // Value taken from title input
-          body:message
+          message: $("#comment" + thisId).val()
         }
       })
-        .then(function(data) {
+        .then(function() {
           // Log the response
-          console.log(data);
+          $("commentModal" + thisId).modal("hide");
         })
       })
     
-//     $(document).on("click", "#notebutton", function () {
-//       $("#commentModal").show();
-//    console.log("Comment Clicked");
-// });
